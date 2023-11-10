@@ -235,22 +235,22 @@
   <div class="logo-box">
     <a href="./home" class="logo logo-light text-center">
       <span class="logo-sm">
-        <img src="//{{ env('APP_DOMAIN') }}/img/icons/{{ env('APP_CORRELATIVE') }}.icon.svg"
-          alt="{{ env('APP_LONGNAME') }}" height="22">
+        <img src="./assets/images/icons/ticket.icon.svg"
+          alt="PIM by Pacheco" height="22">
       </span>
       <span class="logo-lg">
-        <img src="//{{ env('APP_DOMAIN') }}/img/banners/{{ env('APP_CORRELATIVE') }}.banner.svg"
-          alt="{{ env('APP_LONGNAME') }}" height="16">
+        <img src="./assets/images/banners/ticket.banner.svg"
+          alt="PIM by Pacheco" height="16">
       </span>
     </a>
     <a href="./home" class="logo logo-dark text-center">
       <span class="logo-sm">
-        <img src="//{{ env('APP_DOMAIN') }}/img/icons/{{ env('APP_CORRELATIVE') }}.icon.svg"
-          alt="{{ env('APP_LONGNAME') }}" height="22">
+        <img src="./assets/images/icons/ticket.icon.svg"
+          alt="PIM by Pacheco" height="22">
       </span>
       <span class="logo-lg">
-        <img src="//{{ env('APP_DOMAIN') }}/img/banners/{{ env('APP_CORRELATIVE') }}.banner.svg"
-          alt="{{ env('APP_LONGNAME') }}" height="16">
+        <img src="./assets/images/banners/ticket.banner.svg"
+          alt="PIM by Pacheco" height="16">
       </span>
     </a>
   </div>

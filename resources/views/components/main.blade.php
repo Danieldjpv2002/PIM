@@ -13,10 +13,10 @@
   <title>{{ $title ?? 'Inicio' }} | {{ env('APP_LONGNAME') }}</title>
   <link rel="manifest" href="/manifest.webmanifest">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta content="Servicio de Mensajería WhatsApp de SoDe World" name="description" />
-  <meta content="SoDe World" name="author" />
+  <meta content="Proyecto de Innovacion y Mejora" name="description" />
+  <meta content="Pacheco" name="author" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <link rel="shortcut icon" href="./img/icons/pim.icon.svg">
+  <link rel="shortcut icon" href="./assets/images/icons/ticket.icon.svg">
   <link href="./lte/assets/libs/select2/css/select2.min.css" rel="stylesheet"
     type="text/css" />
   <link href="./lte/assets/css/config/default/bootstrap.min.css" rel="stylesheet"
@@ -24,7 +24,7 @@
   <link href="./lte/assets/css/config/default/app.min.css" rel="stylesheet" type="text/css"
     id="app-default-stylesheet" />
   <link href="./lte/assets/css/icons.min.css" rel="stylesheet" type="text/css" />
-  <link href="./lte/assets/libs/dxdatagrid/css/dx.generic.sodetheme.css" rel="stylesheet"
+  <link href="./lte/assets/libs/dxdatagrid/css/dx.light.css" rel="stylesheet"
     type="text/css">
 
   <style>
@@ -76,29 +76,29 @@
 
   @include('components.modals')
 
-  <script src="//{{ $_ENV['APP_DOMAIN'] }}/lte/assets/js/vendor.min.js"></script>
-  <script src="//{{ $_ENV['APP_DOMAIN'] }}/lte/assets/libs/select2/js/select2.min.js"></script>
-  <script src="//{{ $_ENV['APP_DOMAIN'] }}/lte/assets/libs/tippy.js/tippy.all.min.js"></script>
-  <script src="//{{ $_ENV['APP_DOMAIN'] }}/lte/assets/js/app.min.js"></script>
+  <script src="./lte/assets/js/vendor.min.js"></script>
+  <script src="./lte/assets/libs/select2/js/select2.min.js"></script>
+  <script src="./lte/assets/libs/tippy.js/tippy.all.min.js"></script>
+  <script src="./lte/assets/js/app.min.js"></script>
 
   {{-- dxDataGrid files --}}
-  <script src="//{{ $_ENV['APP_DOMAIN'] }}/lte/assets/libs/dxdatagrid/js/exceljs.min.js"></script>
-  <script src="//{{ $_ENV['APP_DOMAIN'] }}/lte/assets/libs/dxdatagrid/js/FileSaver.min.js"></script>
-  <script src="//{{ $_ENV['APP_DOMAIN'] }}/lte/assets/libs/dxdatagrid/js/jszip.min.js"></script>
-  <script src="//{{ $_ENV['APP_DOMAIN'] }}/lte/assets/libs/dxdatagrid/js/dx.all.js"></script>
-  <script src="//{{ $_ENV['APP_DOMAIN'] }}/lte/assets/libs/dxdatagrid/js/localization/dx.messages.es.js"></script>
+  <script src="./lte/assets/libs/dxdatagrid/js/exceljs.min.js"></script>
+  <script src="./lte/assets/libs/dxdatagrid/js/FileSaver.min.js"></script>
+  <script src="./lte/assets/libs/dxdatagrid/js/jszip.min.js"></script>
+  <script src="./lte/assets/libs/dxdatagrid/js/dx.all.js"></script>
+  <script src="./lte/assets/libs/dxdatagrid/js/localization/dx.messages.es.js"></script>
 
   {{-- JavaScript Extend Files --}}
-  <script src="//{{ $_ENV['APP_DOMAIN'] }}/assets/extends/string.extend.js"></script>
-  <script src="//{{ $_ENV['APP_DOMAIN'] }}/assets/extends/json.extend.js"></script>
-  <script src="//{{ $_ENV['APP_DOMAIN'] }}/assets/extends/fetch.extend.js"></script>
-  <script src="//{{ $_ENV['APP_DOMAIN'] }}/assets/extends/cookies.extend.js"></script>
-  <script src="//{{ $_ENV['APP_DOMAIN'] }}/assets/extends/notify.extend.js"></script>
+  <script src="./assets/extends/string.extend.js"></script>
+  <script src="./assets/extends/json.extend.js"></script>
+  <script src="./assets/extends/fetch.extend.js"></script>
+  <script src="./assets/extends/cookies.extend.js"></script>
+  <script src="./assets/extends/notify.extend.js"></script>
 
   {{-- Main Script for Setup the Service --}}
   <script src="assets/settings" type="text/javascript"></script>
   <script src="assets/js/settings.js?v={{ uniqid() }}"></script>
-  <script src="//{{ $_ENV['APP_DOMAIN'] }}/assets/js/session.js?v={{ uniqid() }}"></script>
+  <script src="./assets/js/session.js?v={{ uniqid() }}"></script>
   <script src="assets/js/modals.js?v={{ uniqid() }}"></script>
   <script src="assets/js/business.js?v={{ uniqid() }}"></script>
 

@@ -64,26 +64,6 @@ return [
             ]) : [],
         ],
 
-        'mysql_sode' => [
-            'driver' => 'mysql',
-            'url' => env('DATABASE_URL'),
-            'host' => ENV::DB_HOST ?? '127.0.0.1',
-            'port' => ENV::DB_PORT ?? '3306',
-            'database' => ENV::DB_DATABASE_SODE ?? 'forge',
-            'username' => ENV::DB_USERNAME_SODE ?? 'forge',
-            'password' => ENV::DB_PASSWORD_SODE ?? '',
-            'unix_socket' => ENV::DB_SOCKET ?? '',
-            'charset' => 'utf8mb4',
-            'collation' => 'utf8mb4_unicode_ci',
-            'prefix' => '',
-            'prefix_indexes' => true,
-            'strict' => true,
-            'engine' => null,
-            'options' => extension_loaded('pdo_mysql') ? array_filter([
-                PDO::MYSQL_ATTR_SSL_CA => env('MYSQL_ATTR_SSL_CA'),
-            ]) : [],
-        ],
-
         'pgsql' => [
             'driver' => 'pgsql',
             'url' => env('DATABASE_URL'),

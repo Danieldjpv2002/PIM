@@ -1,8 +1,10 @@
 <?php
 
-use App\Http\Controllers\CategoriesController;
+use App\Http\Controllers\CategoriasController;
+use App\Http\Controllers\EstadosController;
 use App\Http\Controllers\GitHubController;
 use App\Http\Controllers\TemplatesController;
+use App\Http\Controllers\TiposController;
 use App\Http\Controllers\WhatsAppController;
 use App\Http\Controllers\WebhookController;
 use App\Http\Controllers\YouTubeController;
@@ -42,16 +44,27 @@ Route::get('github/banner/{username}', [GitHubController::class, 'banner']);
 // Authenticated routes
 Route::middleware(['auth.sode'])->group(function () {
 
-    // Categories
-    Route::get('/categories', [CategoriesController::class, 'all']);
-    Route::post('/categories/paginate', [CategoriesController::class, 'paginate']);
-    Route::post('/categories', [CategoriesController::class, 'create']);
-    Route::delete('/categories/{id}', [CategoriesController::class, 'delete']);
-    Route::patch('/categories/{id}', [CategoriesController::class, 'status']);
-
     // Templates
     Route::post('/templates/paginate', [TemplatesController::class, 'paginate']);
     Route::post('/templates', [TemplatesController::class, 'create']);
     Route::delete('/templates/{id}', [TemplatesController::class, 'delete']);
     Route::patch('/templates/{id}', [TemplatesController::class, 'status']);
 });
+
+// EndPoint Estados
+Route::post('/estados/paginado', [EstadosController::class, 'paginado']);
+Route::post('/estados', [EstadosController::class, 'crear']);
+Route::delete('/estados/{id}', [EstadosController::class, 'eliminar']);
+
+// EndPoint Categorias
+Route::get('/categorias', [CategoriasController::class, 'lista']);
+Route::post('/categorias/paginado', [CategoriasController::class, 'paginado']);
+Route::post('/categorias', [CategoriasController::class, 'crear']);
+Route::patch('/categorias/{id}', [CategoriasController::class, 'estado']);
+Route::delete('/categorias/{id}', [CategoriasController::class, 'eliminar']);
+
+// EndPoint Tipos
+Route::post('/tipos/paginado', [TiposController::class, 'paginado']);
+Route::post('/tipos', [TiposController::class, 'crear']);
+Route::patch('/tipos/{id}', [TiposController::class, 'estado']);
+Route::delete('/tipos/{id}', [TiposController::class, 'eliminar']);

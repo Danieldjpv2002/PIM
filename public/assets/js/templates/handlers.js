@@ -1,1 +1,0 @@
-$(document).on('submit', '#modal-templates', onModalTemplatesSubmit)
