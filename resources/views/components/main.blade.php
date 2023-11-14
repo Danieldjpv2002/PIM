@@ -17,15 +17,17 @@
   <meta content="Pacheco" name="author" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <link rel="shortcut icon" href="./assets/images/icons/ticket.icon.svg">
-  <link href="./lte/assets/libs/select2/css/select2.min.css" rel="stylesheet"
-    type="text/css" />
-  <link href="./lte/assets/css/config/default/bootstrap.min.css" rel="stylesheet"
-    type="text/css" id="bs-default-stylesheet" />
+
+  <link href="./lte/assets/libs/select2/css/select2.min.css" rel="stylesheet" type="text/css" />
+  <link href="./lte/assets/libs/quill/quill.bubble.css" rel="stylesheet" type="text/css" />
+  <link href="./lte/assets/libs/dropzone/min/dropzone.min.css" rel="stylesheet" type="text/css" />
+
+  <link href="./lte/assets/css/config/default/bootstrap.min.css" rel="stylesheet" type="text/css"
+    id="bs-default-stylesheet" />
   <link href="./lte/assets/css/config/default/app.min.css" rel="stylesheet" type="text/css"
     id="app-default-stylesheet" />
   <link href="./lte/assets/css/icons.min.css" rel="stylesheet" type="text/css" />
-  <link href="./lte/assets/libs/dxdatagrid/css/dx.light.css" rel="stylesheet"
-    type="text/css">
+  <link href="./lte/assets/libs/dxdatagrid/css/dx.light.css" rel="stylesheet" type="text/css">
 
   <style>
     * {
@@ -42,12 +44,44 @@
       border-radius: 5px;
       background-color: rgba(255, 255, 255, 0.25);
     }
+
+    hr {
+      width: 75% !important;
+      display: block;
+      margin: 20px auto 15px !important;
+    }
+
+    .message-pasting {
+      background-color: rgba(255, 255, 255, .5);
+      opacity: 0;
+      visibility: hidden;
+      transition: .125s;
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      backdrop-filter: blur(40px);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 9999999;
+    }
+
+    .message-pasting span {
+      color: #000;
+      font-weight: bold;
+    }
+
+    [pasting="true"] .message-pasting {
+      opacity: 1;
+      visibility: visible;
+    }
   </style>
-  {{-- @laravelPWA --}}
 </head>
 
 <body class="loading"
-  data-layout='{"mode": "light","width": "fluid","menuPosition": "fixed","sidebar": {"color": "light","size": "default","showuser": true},"topbar": {"color": "light"},"showRightSidebarOnPageLoad": true}'>
+  data-layout='{"mode": "light","width": "fluid","menuPosition": "fixed","sidebar": {"color": "light","size": "default","showuser": true},"topbar": {"color": "dark"},"showRightSidebarOnPageLoad": true}'>
   <div id="wrapper">
     @include('components.navbar')
     @include('components.menu')
@@ -77,6 +111,8 @@
   @include('components.modals')
 
   <script src="./lte/assets/js/vendor.min.js"></script>
+  <script src="./lte/assets/libs/quill/quill.min.js"></script>
+  <script src="./lte/assets/libs/dropzone/min/dropzone.min.js"></script>
   <script src="./lte/assets/libs/select2/js/select2.min.js"></script>
   <script src="./lte/assets/libs/tippy.js/tippy.all.min.js"></script>
   <script src="./lte/assets/js/app.min.js"></script>
@@ -94,13 +130,15 @@
   <script src="./assets/extends/fetch.extend.js"></script>
   <script src="./assets/extends/cookies.extend.js"></script>
   <script src="./assets/extends/notify.extend.js"></script>
+  <script src="./assets/extends/clipboard.extend.js"></script>
 
   {{-- Main Script for Setup the Service --}}
   <script src="assets/settings" type="text/javascript"></script>
   <script src="assets/js/settings.js?v={{ uniqid() }}"></script>
   <script src="./assets/js/session.js?v={{ uniqid() }}"></script>
   <script src="assets/js/modals.js?v={{ uniqid() }}"></script>
-  <script src="assets/js/business.js?v={{ uniqid() }}"></script>
+  <script src="assets/js/events.js?v={{ uniqid() }}"></script>
+  <script src="assets/js/handlers.js?v={{ uniqid() }}"></script>
 
 </body>
 

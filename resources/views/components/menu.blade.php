@@ -69,10 +69,28 @@
         <li class="menu-title mt-2">VENTANAS DEL SISTEMA</li>
 
         <li>
-          <a href="./tickets">
+          <a href="#tickets" data-bs-toggle="collapse">
             <i class="mdi mdi-ticket-confirmation-outline"></i>
             <span> Tickets </span>
+            <span class="menu-arrow"></span>
           </a>
+          <div class="collapse" id="tickets">
+            <ul class="nav-second-level">
+
+              <li>
+                <a href="./tickets">
+                  <i class="mdi mdi-format-list-text"></i>
+                  Mis Tickets
+                </a>
+              </li>
+              <li>
+                <a href="./pendientes">
+                  <i class="mdi mdi-book-clock-outline"></i>
+                  Pendientes
+                </a>
+              </li>
+            </ul>
+          </div>
         </li>
 
         <li>
@@ -83,12 +101,12 @@
         </li>
 
         <li>
-          <a href="#products" data-bs-toggle="collapse">
+          <a href="#configuraciones" data-bs-toggle="collapse">
             <i class="mdi mdi-application-cog"></i>
             <span> Configuraciones </span>
             <span class="menu-arrow"></span>
           </a>
-          <div class="collapse" id="products">
+          <div class="collapse" id="configuraciones">
             <ul class="nav-second-level">
 
               <li>

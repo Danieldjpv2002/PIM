@@ -4,6 +4,7 @@ use App\Http\Controllers\CategoriasController;
 use App\Http\Controllers\EstadosController;
 use App\Http\Controllers\GitHubController;
 use App\Http\Controllers\TemplatesController;
+use App\Http\Controllers\TicketsController;
 use App\Http\Controllers\TiposController;
 use App\Http\Controllers\WhatsAppController;
 use App\Http\Controllers\WebhookController;
@@ -64,7 +65,11 @@ Route::patch('/categorias/{id}', [CategoriasController::class, 'estado']);
 Route::delete('/categorias/{id}', [CategoriasController::class, 'eliminar']);
 
 // EndPoint Tipos
+Route::get('/tipos', [TiposController::class, 'lista']);
 Route::post('/tipos/paginado', [TiposController::class, 'paginado']);
 Route::post('/tipos', [TiposController::class, 'crear']);
 Route::patch('/tipos/{id}', [TiposController::class, 'estado']);
 Route::delete('/tipos/{id}', [TiposController::class, 'eliminar']);
+
+// EndPoint Tickets
+Route::post('/tickets', [TicketsController::class, 'crear']);

@@ -82,11 +82,11 @@
       </div>
     </li> --}}
 
-    {{-- <li class="notification-list topbar-dropdown">
-      <a id="btn-calculator" class="nav-link dropdown-toggle waves-effect waves-light" href="#" role="button">
-        <i class="fa fas fa-calculator noti-icon"></i>
+    <li class="notification-list">
+      <a id="btn-newTicket" class="nav-link waves-effect waves-light" title="Nuevo ticket" data-bs-toggle="modal" data-bs-target="#modal-newTicket">
+        <i class="fa fas fa-plus noti-icon"></i>
       </a>
-    </li> --}}
+    </li>
 
     {{-- <li class="dropdown notification-list topbar-dropdown">
       <a class="nav-link dropdown-toggle waves-effect waves-light" data-bs-toggle="dropdown" href="#" role="button"
@@ -189,7 +189,7 @@
           src="//auth.{{ env('APP_DOMAIN') }}/api/users/avatar/undefined/mini" alt="Perfil de usuario"
           title="Perfil de usuario" class="rounded-circle">
         <span class="pro-user-name ms-1">
-          <span session="person.name"></span>
+          <span session="person.name">Daniel Pacheco</span>
           <i class="mdi mdi-chevron-down"></i>
         </span>
       </a>

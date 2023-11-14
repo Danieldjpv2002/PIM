@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Classes\dxResponse;
 use App\Models\dxDataGrid;
+use App\Models\Tickets;
 use App\Models\Tipos;
 use App\Models\Views\ViewTipos;
 use Exception;
@@ -13,7 +14,7 @@ use Illuminate\Http\Response as HttpResponse;
 use SoDe\Extend\JSON;
 use SoDe\Extend\Response;
 
-class TiposController extends Controller
+class TicketsController extends Controller
 {
     public function lista(Request $request): HttpResponse|ResponseFactory
     {
@@ -110,22 +111,16 @@ class TiposController extends Controller
     {
         $response = new Response();
         try {
-            $tipo = null;
-            if ($request->id) {
-                $tipo = Tipos::find($request->id);
-            }
-            if (!$tipo) {
-                $tipo = new Tipos();
-            }
-            $tipo->_categoria = $request->_categoria;
-            $tipo->tipo = $request->tipo;
-            $tipo->descripcion = $request->descripcion;
+            $ticket = new Tickets();
+            $ticket->_tipo = $request->_tipo;
+            $ticket->asunto = $request->asunto;
+            $ticket->descripcion = $request->descripcion;
 
-            $tipo->save();
+            $ticket->save();
 
             $response->status = 200;
             $response->message = 'Operacion correcta';
-            $response->data = $tipo->toArray();
+            $response->data = $ticket->toArray();
         } catch (\Throwable $th) {
             $response->status = 400;
             $response->message = $th->getMessage();
