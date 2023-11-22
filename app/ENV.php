@@ -8,7 +8,7 @@ class ENV
     const APP_NAME = 'PIM';
     const APP_LONGNAME = 'PIM by Pacheco';
     const APP_URL = 'https://pim.sode.me';
-    const APP_DOMAIN = 'sode.localhost';
+    const APP_DOMAIN = 'sode.me';
 
     const DB_CONNECTION = 'mysql';
     const DB_PORT = '3306';

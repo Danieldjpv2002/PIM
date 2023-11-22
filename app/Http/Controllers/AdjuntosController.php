@@ -3,10 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Http\Classes\dxResponse;
+use App\Models\Adjuntos;
 use App\Models\dxDataGrid;
 use App\Models\Tickets;
 use App\Models\Tipos;
-use App\Models\Views\ViewTickets;
 use App\Models\Views\ViewTipos;
 use Exception;
 use Illuminate\Contracts\Routing\ResponseFactory;
@@ -15,7 +15,7 @@ use Illuminate\Http\Response as HttpResponse;
 use SoDe\Extend\JSON;
 use SoDe\Extend\Response;
 
-class TicketsController extends Controller
+class AdjuntosController extends Controller
 {
     public function lista(Request $request): HttpResponse|ResponseFactory
     {
@@ -48,19 +48,20 @@ class TicketsController extends Controller
     {
         $response =  new dxResponse();
         try {
-            $ticketsInstance = ViewTickets::select();
+            $tiposInstance = ViewTipos::select();
 
             if ($request->group != null) {
                 [$grouping] = $request->group;
                 $selector = \str_replace('.', '__', $grouping['selector']);
-                $ticketsInstance = ViewTickets::select([
+                $tiposInstance = ViewTipos::select([
                     "{$selector} AS key"
                 ])
                     ->groupBy($selector);
             }
 
+            $tiposInstance->whereNotNull('estado');
             if ($request->filter) {
-                $ticketsInstance->where(function ($query) use ($request) {
+                $tiposInstance->where(function ($query) use ($request) {
                     dxDataGrid::filter($query, $request->filter ?? []);
                 });
             }
@@ -68,33 +69,33 @@ class TicketsController extends Controller
             if ($request->sort != null) {
                 foreach ($request->sort as $sorting) {
                     $selector = \str_replace('.', '__', $sorting['selector']);
-                    $ticketsInstance->orderBy(
+                    $tiposInstance->orderBy(
                         $selector,
                         $sorting['desc'] ? 'DESC' : 'ASC'
                     );
                 }
             } else {
-                $ticketsInstance->orderBy('id', 'DESC');
+                $tiposInstance->orderBy('id', 'DESC');
             }
 
-            $totalCount = $ticketsInstance->count('*');
-            $ticketsJpa = $request->isLoadingAll
-                ? $ticketsInstance->get()
-                : $ticketsInstance
+            $totalCount = $tiposInstance->count('*');
+            $tiposJpa = $request->isLoadingAll
+                ? $tiposInstance->get()
+                : $tiposInstance
                 ->skip($request->skip ?? 0)
                 ->take($request->take ?? 10)
                 ->get();
 
-            $tickets = [];
+            $tipos = [];
 
-            foreach ($ticketsJpa as $ticketJpa) {
-                $ticket = JSON::unflatten($ticketJpa->toArray(), '__');
-                $tickets[] = $ticket;
+            foreach ($tiposJpa as $tipoJpa) {
+                $tipo = JSON::unflatten($tipoJpa->toArray(), '__');
+                $tipos[] = $tipo;
             }
 
             $response->status = 200;
             $response->message = 'Operación correcta';
-            $response->data = $tickets;
+            $response->data = $tipos;
             $response->totalCount = $totalCount;
         } catch (\Throwable $th) {
             $response->status = 400;
@@ -111,16 +112,19 @@ class TicketsController extends Controller
     {
         $response = new Response();
         try {
-            $ticket = new Tickets();
-            $ticket->_tipo = $request->_tipo;
-            $ticket->asunto = $request->asunto;
-            $ticket->descripcion = $request->descripcion;
+            $blob = $request->file('blob');
+            $ticket = $request->ticket;
+            
+            $adjunto = new Adjuntos();
+            $adjunto->nombre = $blob->getClientOriginalName();
+            $adjunto->mimetipo = $blob->getMimeType();
+            $adjunto->binario = $blob;
+            $adjunto->_ticket = $ticket;
 
-            $ticket->save();
+            $adjunto->save();
 
             $response->status = 200;
             $response->message = 'Operacion correcta';
-            $response->data = $ticket->toArray();
         } catch (\Throwable $th) {
             $response->status = 400;
             $response->message = $th->getMessage();

@@ -1,3 +1,7 @@
+@php
+  use App\ENV;
+@endphp
+
 <div class="navbar-custom">
   <ul class="list-unstyled topnav-menu float-end mb-0">
 
@@ -186,7 +190,7 @@
         role="button" aria-haspopup="false" aria-expanded="false">
         <img
           session="src: //auth.{domain}/api/users/avatar/{relative_id}/mini; alt: Perfil de {person.name}; title: Perfil de {person.name}"
-          src="//auth.{{ env('APP_DOMAIN') }}/api/users/avatar/undefined/mini" alt="Perfil de usuario"
+          src="//auth.{{ ENV::APP_DOMAIN }}/api/users/avatar/undefined/mini" alt="Perfil de usuario"
           title="Perfil de usuario" class="rounded-circle">
         <span class="pro-user-name ms-1">
           <span session="person.name">Daniel Pacheco</span>

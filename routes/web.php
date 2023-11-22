@@ -32,8 +32,8 @@ Route::get('/inicio', function () {
 Route::get('/tickets', function () {
     return view('tickets')->with('ENV', ENV::class);
 });
-Route::get('/pendientes', function () {
-    return view('tickets')->with('ENV', ENV::class);
+Route::get('/lista', function () {
+    return view('lista')->with('ENV', ENV::class);
 });
 Route::get('/categorias', function () {
     return view('categorias')->with('ENV', ENV::class);

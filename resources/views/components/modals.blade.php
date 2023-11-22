@@ -2,13 +2,13 @@
   <div class="row">
     <div class="form-group col-12">
       <label for="cbo-ticket-tipo" class="mb-1">Tipo de incidencia</label>
-      <select name="cbo-ticket-tipo" id="cbo-ticket-tipo" class="form-control" style="width: 100%"></select>
+      <select name="cbo-ticket-tipo" id="cbo-ticket-tipo" class="form-control" style="width: 100%" required></select>
     </div>
     <div id="modal-description" style="display: none">
       <hr>
       <div class="form-group col-12 mb-2">
         <label for="txt-ticket-asunto" class="mb-1">Resumen</label>
-        <input name="txt-ticket-asunto" id="txt-ticket-asunto" type="text" class="form-control">
+        <input name="txt-ticket-asunto" id="txt-ticket-asunto" type="text" class="form-control" required>
       </div>
       <div class="form-group col-12 mb-2">
         <label for="txt-ticket-descripcion" class="mb-1">Descripcion</label>

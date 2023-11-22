@@ -1,3 +1,7 @@
+@php
+  use App\ENV;
+@endphp
+
 <div class="left-side-menu">
 
   <div class="h-100" data-simplebar>
@@ -5,8 +9,8 @@
     <div class="user-box text-center">
 
       <img
-        session="src: //auth.{{ env('APP_DOMAIN') }}/api/users/avatar/{relative_id}/mini; alt: Perfil de {person.name}; title: Perfil de {person.name}"
-        src="//auth.{{ env('APP_DOMAIN') }}/api/users/avatar/undefined/mini" alt="Perfil de usuario"
+        session="src: //auth.{{ ENV::APP_DOMAIN }}/api/users/avatar/{relative_id}/mini; alt: Perfil de {person.name}; title: Perfil de {person.name}"
+        src="//auth.{{ ENV::APP_DOMAIN }}/api/users/avatar/undefined/mini" alt="Perfil de usuario"
         title="Perfil de usuario" class="rounded-circle img-thumbnail avatar-md" style="background-color: transparent">
       <div class="dropdown">
         <a session="person.name" href="#" class="user-name dropdown-toggle h5 mt-2 mb-1 d-block"
@@ -84,9 +88,9 @@
                 </a>
               </li>
               <li>
-                <a href="./pendientes">
+                <a href="./lista">
                   <i class="mdi mdi-book-clock-outline"></i>
-                  Pendientes
+                  Lista de tickets
                 </a>
               </li>
             </ul>

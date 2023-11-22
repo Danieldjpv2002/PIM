@@ -1,3 +1,7 @@
+@php
+  use App\ENV;
+@endphp
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -10,7 +14,7 @@
   <!-- NO CACHE -->
 
   <meta charset="utf-8" />
-  <title>{{ $title ?? 'Inicio' }} | {{ env('APP_LONGNAME') }}</title>
+  <title>{{ $title ?? 'Inicio' }} | {{ ENV::APP_LONGNAME }}</title>
   <link rel="manifest" href="/manifest.webmanifest">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta content="Proyecto de Innovacion y Mejora" name="description" />
@@ -32,7 +36,7 @@
   <style>
     * {
       scrollbar-width: thin;
-      scrollbar-color: rgba(255, 255, 255, 0.25) transparent;
+      scrollbar-color: rgba(0, 0, 0, 0.25) transparent;
     }
 
     *::-webkit-scrollbar {
@@ -42,7 +46,7 @@
 
     *::-webkit-scrollbar-thumb {
       border-radius: 5px;
-      background-color: rgba(255, 255, 255, 0.25);
+      background-color: rgba(0, 0, 0, 0.25);
     }
 
     hr {
@@ -125,6 +129,7 @@
   <script src="./lte/assets/libs/dxdatagrid/js/localization/dx.messages.es.js"></script>
 
   {{-- JavaScript Extend Files --}}
+  <script src="./assets/extends/file.extend.js"></script>
   <script src="./assets/extends/string.extend.js"></script>
   <script src="./assets/extends/json.extend.js"></script>
   <script src="./assets/extends/fetch.extend.js"></script>

@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AdjuntosController;
 use App\Http\Controllers\CategoriasController;
 use App\Http\Controllers\EstadosController;
 use App\Http\Controllers\GitHubController;
@@ -72,4 +73,8 @@ Route::patch('/tipos/{id}', [TiposController::class, 'estado']);
 Route::delete('/tipos/{id}', [TiposController::class, 'eliminar']);
 
 // EndPoint Tickets
+Route::post('/tickets/paginado', [TicketsController::class, 'paginado']);
 Route::post('/tickets', [TicketsController::class, 'crear']);
+
+// EndPoint Adjuntos
+Route::post('/adjuntos', [AdjuntosController::class, 'crear']);
