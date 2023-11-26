@@ -132,13 +132,13 @@ class TicketsController extends Controller
         }
     }
 
-    static function estado(Request $request, string $id)
+    static function actualizarEstado(Request $request)
     {
         $response = new Response();
         try {
-            Tipos::where('id', $id)
+            Tickets::where('id', $request->id)
                 ->update([
-                    'estado' => $request->status ? 0 : 1
+                    '_estado' => $request->estado
                 ]);
 
             $response->status = 200;

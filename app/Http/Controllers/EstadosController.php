@@ -14,7 +14,7 @@ use SoDe\Extend\Response;
 
 class EstadosController extends Controller
 {
-    public function listar(Request $request): HttpResponse|ResponseFactory
+    public function lista(Request $request): HttpResponse|ResponseFactory
     {
         $response = new Response();
         try {
@@ -24,7 +24,6 @@ class EstadosController extends Controller
             $estados = [];
             foreach ($estadosJpa as $estadoJpa) {
                 $estado = JSON::unflatten($estadoJpa->toArray(), '__');
-                unset($estado['_business']);
                 $estados[] = $estado;
             }
 

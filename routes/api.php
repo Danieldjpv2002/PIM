@@ -54,6 +54,7 @@ Route::middleware(['auth.sode'])->group(function () {
 });
 
 // EndPoint Estados
+Route::get('/estados', [EstadosController::class, 'lista']);
 Route::post('/estados/paginado', [EstadosController::class, 'paginado']);
 Route::post('/estados', [EstadosController::class, 'crear']);
 Route::delete('/estados/{id}', [EstadosController::class, 'eliminar']);
@@ -75,6 +76,7 @@ Route::delete('/tipos/{id}', [TiposController::class, 'eliminar']);
 // EndPoint Tickets
 Route::post('/tickets/paginado', [TicketsController::class, 'paginado']);
 Route::post('/tickets', [TicketsController::class, 'crear']);
+Route::patch('/tickets/estado', [TicketsController::class, 'actualizarEstado']);
 
 // EndPoint Adjuntos
 Route::get('/adjuntos/{id}', [AdjuntosController::class, 'obtener']);

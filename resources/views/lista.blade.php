@@ -16,12 +16,16 @@
       object-position: center;
       -o-object-fit: cover;
       -o-object-position: center;
-      box-shadow: 0 0 5px rgba(0, 0, 0, .125);
+      box-shadow: 0 0 5px rgba(0, 0, 0, .25);
     }
   </style>
   <x-table title="tickets"></x-table>
   <x-modal id="modal-tickets" title="Detalles del ticket" size="modal-md">
     <p class="mb-1"><b>Informador</b>: <span id="txt_informador"></span></p>
+    <p class="mb-1"><b>Correo</b>: <span id="txt_correo"></span></p>
+    <p class="mb-1"><b>Telefono</b>: <span id="txt_telefono"></span></p>
+    <p class="mb-1"><b>Anydesk</b>: <span id="txt_anydesk"></span></p>
+    <p class="mb-1"><b>IP</b>: <span id="txt_ip"></span></p>
     <hr>
     <p class="mb-1"><b>Categoria</b>: <span id="txt_categoria"></span></p>
     <p class="mb-1"><b>Tipo</b>: <span id="txt_tipo"></span></p>

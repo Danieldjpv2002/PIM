@@ -7,11 +7,20 @@ const getAdjuntos = async (ticket) => {
         const container = $(contenedor_adjuntos)
         container.empty()
         data.forEach(({ id, nombre, mimetipo }) => {
+            const a = $('<a>')
+            a.attr('href', `./api/adjuntos/${id}`)
+            a.attr('target', '_blank')
+            a.attr('title', nombre)
+
             const img = $('<img>')
             img.attr('alt', nombre)
             img.attr('type', mimetipo)
             img.attr('src', `./api/adjuntos/${id}`)
-            container.append(img)
+            a.html(img)
+
+            tippy(a.get(0), { arrow: true })
+
+            container.append(a)
         });
 
     } catch (error) {

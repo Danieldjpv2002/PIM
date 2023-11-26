@@ -2,6 +2,10 @@ var dataGrid;
 
 (async () => {
     DevExpress.localization.locale('es');
+
+    const { result } = await Fetch('./api/estados')
+    const estados = result.data ?? []
+
     dataGrid = $("#dataGrid").dxDataGrid({
         dataSource: {
             load: async (params) => {
@@ -113,7 +117,35 @@ var dataGrid;
                 caption: 'Estado',
                 dataType: 'string',
                 cellTemplate: (container, { data }) => {
-                    container.html(data?.estado?.estado || '<i class="text-muted">- Sin estado -</i>')
+                    container.css('overflow', 'unset')
+                    const btnGroup = $('<div class="btn-group">')
+
+                    const button = $('<button class="btn btn-xs btn-white dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">')
+                    button.html(data?.estado?.estado || '<i class="text-muted">- Sin estado -</i>')
+                    btnGroup.append(button)
+
+                    if (data.estado.id != 3) {
+                        const dropdownMenu = $('<div class="dropdown-menu">')
+
+                        estados.forEach(({ id, estado, descripcion }) => {
+                            const item = $('<span class="dropdown-item">')
+                            item.text(estado)
+                            item.attr('title', descripcion)
+
+                            if (data?.estado?.id != id) {
+                                item.css('cursor', 'pointer')
+                                item.on('click', (e) => onTicketEstadoClicked(id, data.id))
+                            }
+
+                            tippy(item.get(0), { arrow: true })
+
+                            dropdownMenu.append(item)
+                        })
+
+                        btnGroup.append(dropdownMenu)
+                    }
+
+                    container.html(btnGroup)
                 }
             },
             {
