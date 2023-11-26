@@ -31,7 +31,7 @@ const onNewTicketSubmit = async (e) => {
         const ticket = {}
         ticket._tipo = $('#cbo-ticket-tipo').val()
         ticket.asunto = $('#txt-ticket-asunto').val()
-        ticket.descripcion = JSON.stringify(ticketEditor.getContents())
+        ticket.descripcion = ticketEditor.root.innerHTML
         const attachments = [...$('#container-ticket-lista-adjuntos button')]
 
         if (ticketEditor.getLength() == 1) throw new Error('Es necesario agregar una descripcion')
@@ -84,6 +84,9 @@ const onNewTicketSubmit = async (e) => {
 
         })
 
+        $('#modal-newTicket').modal('hide')
+        onTicketModalReset()
+
     } catch (error) {
         Notify.add({
             title: 'Error',
@@ -91,4 +94,11 @@ const onNewTicketSubmit = async (e) => {
             type: 'danger'
         })
     }
+}
+
+const onTicketModalReset = () => {
+    $('#cbo-ticket-tipo').val(null).trigger('change')
+    $('#txt-ticket-asunto').val(null)
+    ticketEditor.setContents(null)
+    $('#container-ticket-lista-adjuntos').empty()
 }

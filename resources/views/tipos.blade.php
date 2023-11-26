@@ -4,11 +4,11 @@
     <input type="hidden" name="txt_id" id="txt_id">
     <div class="from-group mb-2">
       <label for="cbo_categoria">Categoria</label>
-      <select id="cbo_categoria" class="form-control" style="width: 100%"></select>
+      <select id="cbo_categoria" class="form-control" style="width: 100%" required></select>
     </div>
     <div class="from-group mb-2">
       <label for="txt_tipo">Tipo</label>
-      <input id="txt_tipo" type="text" class="form-control">
+      <input id="txt_tipo" type="text" class="form-control" required>
     </div>
     <div class="form-group">
       <label for="txt_descripcion">Descripcion</label>
@@ -17,6 +17,6 @@
   </x-modal>
 </x-main>
 
-<script src="./assets/js/tipos/events.js"></script>
-<script src="./assets/js/tipos/handlers.js"></script>
-<script src="./assets/js/tipos/tabla.js"></script>
+<script src="./assets/js/tipos/events.js?v={{ uniqid() }}"></script>
+<script src="./assets/js/tipos/handlers.js?v={{ uniqid() }}"></script>
+<script src="./assets/js/tipos/tabla.js?v={{ uniqid() }}"></script>

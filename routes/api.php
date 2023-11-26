@@ -77,4 +77,6 @@ Route::post('/tickets/paginado', [TicketsController::class, 'paginado']);
 Route::post('/tickets', [TicketsController::class, 'crear']);
 
 // EndPoint Adjuntos
+Route::get('/adjuntos/{id}', [AdjuntosController::class, 'obtener']);
+Route::get('/adjuntos/ticket/{ticket}', [AdjuntosController::class, 'obtenerPorTicket']);
 Route::post('/adjuntos', [AdjuntosController::class, 'crear']);

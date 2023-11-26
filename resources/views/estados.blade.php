@@ -13,6 +13,6 @@
   </x-modal>
 </x-main>
 
-<script src="./assets/js/estados/events.js"></script>
-<script src="./assets/js/estados/handlers.js"></script>
-<script src="./assets/js/estados/tabla.js"></script>
+<script src="./assets/js/estados/events.js?v={{ uniqid() }}"></script>
+<script src="./assets/js/estados/handlers.js?v={{ uniqid() }}"></script>
+<script src="./assets/js/estados/tabla.js?v={{ uniqid() }}"></script>

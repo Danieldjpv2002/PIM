@@ -5,8 +5,8 @@ namespace App\Http\Controllers;
 use App\Http\Classes\dxResponse;
 use App\Models\Adjuntos;
 use App\Models\dxDataGrid;
-use App\Models\Tickets;
 use App\Models\Tipos;
+use App\Models\Views\ViewAdjuntos;
 use App\Models\Views\ViewTipos;
 use Exception;
 use Illuminate\Contracts\Routing\ResponseFactory;
@@ -17,23 +17,47 @@ use SoDe\Extend\Response;
 
 class AdjuntosController extends Controller
 {
-    public function lista(Request $request): HttpResponse|ResponseFactory
+
+    public function obtener(Request $request, string $id): HttpResponse|ResponseFactory
     {
         $response = new Response();
         try {
-            $tiposJpa = ViewTipos::select()
-                ->whereNotNull('estado')
+            $adjuntoJpa = Adjuntos::find($id);
+
+            if (!$adjuntoJpa) throw new Exception('El adjunto solicitado no existe');
+
+            return response($adjuntoJpa->binario, 200, [
+                'Content-Type' => $adjuntoJpa->mimetipo
+            ]);
+        } catch (\Throwable $th) {
+            $response->status = 400;
+            $response->message = $th->getMessage();
+            return response(
+                $response->toArray(),
+                $response->status
+            );
+        }
+    }
+
+    public function obtenerPorTicket(Request $request, string $ticket): HttpResponse|ResponseFactory
+    {
+        $response = new Response();
+        try {
+            $adjuntosJpa = ViewAdjuntos::select([
+                'id', 'nombre', 'mimetipo', 'ticket__id'
+            ])
+                ->where('ticket__id', $ticket)
                 ->get();
 
-            $tipos = [];
-            foreach ($tiposJpa as $tipoJpa) {
-                $tipo = JSON::unflatten($tipoJpa->toArray(), '__');
-                $tipos[] = $tipo;
+            $adjuntos = [];
+            foreach ($adjuntosJpa as $adjuntoJpa) {
+                $adjunto = JSON::unflatten($adjuntoJpa->toArray(), '__');
+                $adjuntos[] = $adjunto;
             }
 
             $response->status = 200;
             $response->message = 'Operacion correcta';
-            $response->data = $tipos;
+            $response->data = $adjuntos;
         } catch (\Throwable $th) {
             $response->status = 400;
             $response->message = $th->getMessage();
@@ -114,11 +138,11 @@ class AdjuntosController extends Controller
         try {
             $blob = $request->file('blob');
             $ticket = $request->ticket;
-            
+
             $adjunto = new Adjuntos();
             $adjunto->nombre = $blob->getClientOriginalName();
             $adjunto->mimetipo = $blob->getMimeType();
-            $adjunto->binario = $blob;
+            $adjunto->binario = file_get_contents($blob->getRealPath());
             $adjunto->_ticket = $ticket;
 
             $adjunto->save();

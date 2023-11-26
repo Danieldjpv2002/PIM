@@ -1,19 +1,4 @@
-var dataGrid
-
-const loadCategorias = async () => {
-    const { status, result } = await Fetch('./api/categorias')
-    if (!status) return
-    const { data } = result
-    const cbo = $(cbo_categoria)
-    cbo.html('<option value>- Seleccione una categoria -</option>')
-    data.forEach(({ id, categoria }) => {
-        const opt = $('<option>')
-        opt.val(id)
-        opt.text(categoria)
-        cbo.append(opt)
-    })
-    cbo.select2({ dropdownParent: $('#modal-templates') })
-}
+var dataGrid;
 
 (async () => {
     DevExpress.localization.locale('es');
@@ -40,15 +25,6 @@ const loadCategorias = async () => {
                     icon: 'refresh',
                     hint: 'REFRESCAR TABLA',
                     onClick: () => dataGrid.refresh()
-                }
-            });
-            items.unshift({
-                widget: 'dxButton',
-                location: 'after',
-                options: {
-                    icon: 'plus',
-                    hint: 'NUEVO REGISTRO',
-                    onClick: () => onButtonUpdateClicked()
                 }
             });
         },
@@ -136,7 +112,7 @@ const loadCategorias = async () => {
                 dataField: 'estado.estado',
                 caption: 'Estado',
                 dataType: 'string',
-                cellTemplate: (container, {data}) => {
+                cellTemplate: (container, { data }) => {
                     container.html(data?.estado?.estado || '<i class="text-muted">- Sin estado -</i>')
                 }
             },
@@ -174,27 +150,10 @@ const loadCategorias = async () => {
                     btnDetalles.on('click', () => onButtonDetailClicked(data))
                     tippy(btnDetalles.get(0), { arrow: true })
                     container.append(btnDetalles)
-
-                    const btnStatus = $('<button>').addClass('btn btn-xs btn-light')
-                    if (data.estado == 1) btnStatus.append('<i class="fa fa-toggle-on text-success"></i>')
-                    else if (data.estado == 0) btnStatus.append('<i class="fa fa-toggle-off text-danger"></i>')
-                    else btnStatus.append('<i class="fa fa-pen"></i>')
-                    btnStatus.attr('title', 'Cambiar estado')
-                    btnStatus.on('click', () => onButtonStatusClicked(data))
-                    tippy(btnStatus.get(0), { arrow: true })
-                    container.append(btnStatus)
-
-                    const btnDelete = $('<button>').addClass('btn btn-xs btn-soft-danger')
-                    btnDelete.append('<i class="fa fa-trash-alt"></i>')
-                    btnDelete.attr('title', 'Eliminar')
-                    btnDelete.on('click', () => onButtonDeleteClicked(data))
-                    tippy(btnDelete.get(0), { arrow: true })
-                    container.append(btnDelete)
                 },
                 allowFiltering: false,
                 allowExporting: false
             }
         ]
     }).dxDataGrid('instance');
-    loadCategorias()
 })();

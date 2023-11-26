@@ -14,4 +14,6 @@ $(document).on('change', '#cbo-ticket-tipo', (e) => {
     }
 })
 
+$(document).on('shown.bs.modal', '#modal-newTicket', (e) => onTicketModalReset())
+
 $(document).on('submit', '#modal-newTicket', (e) => onNewTicketSubmit(e))
