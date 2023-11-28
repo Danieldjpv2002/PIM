@@ -47,8 +47,8 @@ const drawSession = (data) => {
     } catch (error) {
         console.warn(error)
         Cookies.delete('SoDe-Auth-Token')
-        // if (SERVICE)
-        //     location.href = `/login`
+        if (SERVICE)
+            location.href = `/login`
     }
 })()
 
