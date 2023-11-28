@@ -127,36 +127,7 @@ var dataGrid;
                 caption: 'Estado',
                 dataType: 'string',
                 cellTemplate: (container, { data }) => {
-                    container.css('overflow', 'unset')
-                    const btnGroup = $('<div class="btn-group">')
-
-                    const button = $('<button class="btn btn-xs btn-white dropdown-toggle" aria-expanded="false">')
-                    button.html(data?.estado?.estado || '<i class="text-muted">- Sin estado -</i>')
-                    btnGroup.append(button)
-
-                    if (data.estado.id != 3) {
-                        button.attr('data-bs-toggle', 'dropdown')
-                        const dropdownMenu = $('<div class="dropdown-menu">')
-
-                        estados.forEach(({ id, estado, descripcion }) => {
-                            const item = $('<span class="dropdown-item">')
-                            item.text(estado)
-                            item.attr('title', descripcion)
-
-                            if (data?.estado?.id != id) {
-                                item.css('cursor', 'pointer')
-                                item.on('click', (e) => onTicketEstadoClicked(id, data.id))
-                            }
-
-                            tippy(item.get(0), { arrow: true })
-
-                            dropdownMenu.append(item)
-                        })
-
-                        btnGroup.append(dropdownMenu)
-                    }
-
-                    container.html(btnGroup)
+                    container.html(data?.estado?.estado || '<i class="text-muted">- Sin estado -</i>')
                 }
             },
             {
@@ -179,36 +150,9 @@ var dataGrid;
                 caption: 'Responsable',
                 dataType: 'string',
                 cellTemplate: (container, { data }) => {
-                    container.css('overflow', 'unset')
-                    const btnGroup = $('<div class="btn-group">')
-
-                    const button = $('<button class="btn btn-xs btn-white dropdown-toggle" aria-expanded="false">')
-                    button.html(data?.responsable?.nombres || '<i class="text-muted">- Sin responsable -</i>')
-                    btnGroup.append(button)
-
-                    if (data.estado.id != 3) {
-                        button.attr('data-bs-toggle', 'dropdown')
-                        const dropdownMenu = $('<div class="dropdown-menu">')
-
-                        usuarios.forEach(({ id, nombres, apellidos }) => {
-                            const item = $('<span class="dropdown-item">')
-                            item.text(nombres)
-                            item.attr('title', `${nombres} ${apellidos}`)
-
-                            if (data?.responsable?.id != id) {
-                                item.css('cursor', 'pointer')
-                                item.on('click', (e) => onTicketResponsableClicked(id, data.id))
-                            }
-
-                            tippy(item.get(0), { arrow: true })
-
-                            dropdownMenu.append(item)
-                        })
-
-                        btnGroup.append(dropdownMenu)
-                    }
-
-                    container.html(btnGroup)
+                    container.html(data.responsable.nombres ?? '<i class="text-muted">- Sin responsable -</i>')
+                    container.attr('title', `${data.responsable.nombres ?? ''} ${data.responsable.apellidos ?? ''}`.trim())
+                    tippy(container.get(0), { arrow: true })
                 }
             },
             {
@@ -227,15 +171,6 @@ var dataGrid;
                     btnDetalles.on('click', () => onButtonDetailClicked(data))
                     tippy(btnDetalles.get(0), { arrow: true })
                     container.append(btnDetalles)
-
-                    if (data?.estado?.id == 2) {
-                        const btnSolucion = $('<button>').addClass('btn btn-xs btn-soft-dark')
-                        btnSolucion.append('<i class="fa fa-check"></i>')
-                        btnSolucion.attr('title', 'Agregar solucion')
-                        btnSolucion.on('click', () => onButtonSolutionClicked(data))
-                        tippy(btnSolucion.get(0), { arrow: true })
-                        container.append(btnSolucion)
-                    }
                 },
                 allowFiltering: false,
                 allowExporting: false
