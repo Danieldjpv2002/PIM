@@ -3,8 +3,18 @@ var dataGrid;
 (async () => {
     DevExpress.localization.locale('es');
 
-    const { result } = await Fetch('./api/estados')
-    const estados = result.data ?? []
+    const [resEstados, resUsuarios] = await Promise.all([
+        Fetch('./api/estados'),
+        Fetch('./api/usuarios')
+    ])
+
+    const { result: resultEstados } = resEstados
+    const estados = resultEstados.data ?? []
+
+    const { result: resultUsuarios } = resUsuarios
+    const usuarios = resultUsuarios.data ?? []
+
+    console.log(usuarios)
 
     dataGrid = $("#dataGrid").dxDataGrid({
         dataSource: {
@@ -120,11 +130,12 @@ var dataGrid;
                     container.css('overflow', 'unset')
                     const btnGroup = $('<div class="btn-group">')
 
-                    const button = $('<button class="btn btn-xs btn-white dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">')
+                    const button = $('<button class="btn btn-xs btn-white dropdown-toggle" aria-expanded="false">')
                     button.html(data?.estado?.estado || '<i class="text-muted">- Sin estado -</i>')
                     btnGroup.append(button)
 
                     if (data.estado.id != 3) {
+                        button.attr('data-bs-toggle', 'dropdown')
                         const dropdownMenu = $('<div class="dropdown-menu">')
 
                         estados.forEach(({ id, estado, descripcion }) => {
@@ -156,14 +167,48 @@ var dataGrid;
             {
                 dataField: 'informador.nombres',
                 caption: 'Informador',
-                dataType: 'string'
+                dataType: 'string',
+                cellTemplate: (container, { data }) => {
+                    container.text(data.informador.nombres)
+                    container.attr('title', `${data.informador.nombres} ${data.informador.apellidos}`)
+                    tippy(container.get(0), { arrow: true })
+                }
             },
             {
                 dataField: 'responsable.nombres',
                 caption: 'Responsable',
                 dataType: 'string',
                 cellTemplate: (container, { data }) => {
-                    container.html(data?.responsable?.nombres || '<i class="text-muted">- Sin responsable -</i>')
+                    container.css('overflow', 'unset')
+                    const btnGroup = $('<div class="btn-group">')
+
+                    const button = $('<button class="btn btn-xs btn-white dropdown-toggle" aria-expanded="false">')
+                    button.html(data?.responsable?.nombres || '<i class="text-muted">- Sin responsable -</i>')
+                    btnGroup.append(button)
+
+                    if (data.estado.id != 3) {
+                        button.attr('data-bs-toggle', 'dropdown')
+                        const dropdownMenu = $('<div class="dropdown-menu">')
+
+                        usuarios.forEach(({ id, nombres, apellidos }) => {
+                            const item = $('<span class="dropdown-item">')
+                            item.text(nombres)
+                            item.attr('title', `${nombres} ${apellidos}`)
+
+                            if (data?.responsable?.id != id) {
+                                item.css('cursor', 'pointer')
+                                item.on('click', (e) => onTicketResponsableClicked(id, data.id))
+                            }
+
+                            tippy(item.get(0), { arrow: true })
+
+                            dropdownMenu.append(item)
+                        })
+
+                        btnGroup.append(dropdownMenu)
+                    }
+
+                    container.html(btnGroup)
                 }
             },
             {

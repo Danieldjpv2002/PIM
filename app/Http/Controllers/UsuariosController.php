@@ -4,9 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Http\Classes\dxResponse;
 use App\Models\dxDataGrid;
-use App\Models\Tickets;
 use App\Models\Tipos;
-use App\Models\Views\ViewTickets;
+use App\Models\Usuarios;
 use App\Models\Views\ViewTipos;
 use Exception;
 use Illuminate\Contracts\Routing\ResponseFactory;
@@ -15,25 +14,27 @@ use Illuminate\Http\Response as HttpResponse;
 use SoDe\Extend\JSON;
 use SoDe\Extend\Response;
 
-class TicketsController extends Controller
+class UsuariosController extends Controller
 {
     public function lista(Request $request): HttpResponse|ResponseFactory
     {
         $response = new Response();
         try {
-            $tiposJpa = ViewTipos::select()
+            $jpas = Usuarios::select([
+                'id', 'nombres', 'apellidos'
+            ])
                 ->whereNotNull('estado')
                 ->get();
 
-            $tipos = [];
-            foreach ($tiposJpa as $tipoJpa) {
-                $tipo = JSON::unflatten($tipoJpa->toArray(), '__');
-                $tipos[] = $tipo;
+            $results = [];
+            foreach ($jpas as $jpa) {
+                $result = JSON::unflatten($jpa->toArray(), '__');
+                $results[] = $result;
             }
 
             $response->status = 200;
             $response->message = 'Operacion correcta';
-            $response->data = $tipos;
+            $response->data = $results;
         } catch (\Throwable $th) {
             $response->status = 400;
             $response->message = $th->getMessage();
@@ -48,19 +49,20 @@ class TicketsController extends Controller
     {
         $response =  new dxResponse();
         try {
-            $ticketsInstance = ViewTickets::select();
+            $instance = Usuarios::select();
 
             if ($request->group != null) {
                 [$grouping] = $request->group;
                 $selector = \str_replace('.', '__', $grouping['selector']);
-                $ticketsInstance = ViewTickets::select([
+                $instance = Usuarios::select([
                     "{$selector} AS key"
                 ])
                     ->groupBy($selector);
             }
 
+            $instance->whereNotNull('estado');
             if ($request->filter) {
-                $ticketsInstance->where(function ($query) use ($request) {
+                $instance->where(function ($query) use ($request) {
                     dxDataGrid::filter($query, $request->filter ?? []);
                 });
             }
@@ -68,33 +70,33 @@ class TicketsController extends Controller
             if ($request->sort != null) {
                 foreach ($request->sort as $sorting) {
                     $selector = \str_replace('.', '__', $sorting['selector']);
-                    $ticketsInstance->orderBy(
+                    $instance->orderBy(
                         $selector,
                         $sorting['desc'] ? 'DESC' : 'ASC'
                     );
                 }
             } else {
-                $ticketsInstance->orderBy('id', 'DESC');
+                $instance->orderBy('id', 'DESC');
             }
 
-            $totalCount = $ticketsInstance->count('*');
-            $ticketsJpa = $request->isLoadingAll
-                ? $ticketsInstance->get()
-                : $ticketsInstance
+            $totalCount = $instance->count('*');
+            $jpas = $request->isLoadingAll
+                ? $instance->get()
+                : $instance
                 ->skip($request->skip ?? 0)
                 ->take($request->take ?? 10)
                 ->get();
 
-            $tickets = [];
+            $results = [];
 
-            foreach ($ticketsJpa as $ticketJpa) {
-                $ticket = JSON::unflatten($ticketJpa->toArray(), '__');
-                $tickets[] = $ticket;
+            foreach ($jpas as $jpa) {
+                $result = JSON::unflatten($jpa->toArray(), '__');
+                $results[] = $result;
             }
 
             $response->status = 200;
             $response->message = 'Operación correcta';
-            $response->data = $tickets;
+            $response->data = $results;
             $response->totalCount = $totalCount;
         } catch (\Throwable $th) {
             $response->status = 400;
@@ -111,42 +113,22 @@ class TicketsController extends Controller
     {
         $response = new Response();
         try {
-            $ticket = new Tickets();
-            $ticket->_tipo = $request->_tipo;
-            $ticket->asunto = $request->asunto;
-            $ticket->descripcion = $request->descripcion;
-
-            $ticket->save();
-
-            $response->status = 200;
-            $response->message = 'Operacion correcta';
-            $response->data = $ticket->toArray();
-        } catch (\Throwable $th) {
-            $response->status = 400;
-            $response->message = $th->getMessage();
-        } finally {
-            return response(
-                $response->toArray(),
-                $response->status
-            );
-        }
-    }
-
-    static function actualizarEstado(Request $request)
-    {
-        $response = new Response();
-        try {
-            $updates = [
-                '_estado' => $request->estado
-            ];
-            if ($request->estado == 1) {
-                $updates['_responsable'] = null;
+            $tipo = null;
+            if ($request->id) {
+                $tipo = Usuarios::find($request->id);
             }
-            Tickets::where('id', $request->id)
-                ->update($updates);
+            if (!$tipo) {
+                $tipo = new Usuarios();
+            }
+            $tipo->_categoria = $request->_categoria;
+            $tipo->tipo = $request->tipo;
+            $tipo->descripcion = $request->descripcion;
+
+            $tipo->save();
 
             $response->status = 200;
             $response->message = 'Operacion correcta';
+            $response->data = $tipo->toArray();
         } catch (\Throwable $th) {
             $response->status = 400;
             $response->message = $th->getMessage();
@@ -158,13 +140,13 @@ class TicketsController extends Controller
         }
     }
 
-    static function actualizarResponsable(Request $request)
+    static function estado(Request $request, string $id)
     {
         $response = new Response();
         try {
-            Tickets::where('id', $request->id)
+            Usuarios::where('id', $id)
                 ->update([
-                    '_responsable' => $request->responsable
+                    'estado' => $request->status ? 0 : 1
                 ]);
 
             $response->status = 200;
@@ -184,7 +166,7 @@ class TicketsController extends Controller
     {
         $response = new Response();
         try {
-            $deleted = Tipos::where('id', $id)
+            $deleted = Usuarios::where('id', $id)
                 ->update(['estado' => null]);
 
             if (!$deleted) throw new Exception('No se ha eliminado ningun registro');

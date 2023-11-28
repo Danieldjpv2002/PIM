@@ -7,6 +7,7 @@ use App\Http\Controllers\GitHubController;
 use App\Http\Controllers\TemplatesController;
 use App\Http\Controllers\TicketsController;
 use App\Http\Controllers\TiposController;
+use App\Http\Controllers\UsuariosController;
 use App\Http\Controllers\WhatsAppController;
 use App\Http\Controllers\WebhookController;
 use App\Http\Controllers\YouTubeController;
@@ -24,33 +25,9 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
-});
-
-Route::group(['middleware' => ['cors']], function () {
-    Route::get('webhook', [WebhookController::class, 'verify']);
-    Route::post('webhook', [WebhookController::class, 'webhook']);
-});
-
-Route::get('get/{contact}', [WhatsAppController::class, 'get']);
-Route::post('send/activity/issue', [WhatsAppController::class, 'sendActivityIssue']);
-Route::post('send/contact', [WhatsAppController::class, 'sendContact']);
-Route::get('audio/{media_id}', [WhatsAppController::class, 'getAudio']);
-Route::get('youtube/audio/{media_id}', [YouTubeController::class, 'audio']);
-Route::get('youtube/video/{media_id}', [YouTubeController::class, 'video']);
-
-Route::post('github', [GitHubController::class, 'webhook']);
-Route::get('github/banner/{username}', [GitHubController::class, 'banner']);
-
 // Authenticated routes
 Route::middleware(['auth.sode'])->group(function () {
 
-    // Templates
-    Route::post('/templates/paginate', [TemplatesController::class, 'paginate']);
-    Route::post('/templates', [TemplatesController::class, 'create']);
-    Route::delete('/templates/{id}', [TemplatesController::class, 'delete']);
-    Route::patch('/templates/{id}', [TemplatesController::class, 'status']);
 });
 
 // EndPoint Estados
@@ -73,10 +50,18 @@ Route::post('/tipos', [TiposController::class, 'crear']);
 Route::patch('/tipos/{id}', [TiposController::class, 'estado']);
 Route::delete('/tipos/{id}', [TiposController::class, 'eliminar']);
 
+// EndPoint Usuarios
+Route::get('/usuarios', [UsuariosController::class, 'lista']);
+Route::post('/usuarios/paginado', [UsuariosController::class, 'paginado']);
+Route::post('/usuarios', [UsuariosController::class, 'crear']);
+Route::patch('/usuarios/{id}', [UsuariosController::class, 'estado']);
+Route::delete('/usuarios/{id}', [UsuariosController::class, 'eliminar']);
+
 // EndPoint Tickets
 Route::post('/tickets/paginado', [TicketsController::class, 'paginado']);
 Route::post('/tickets', [TicketsController::class, 'crear']);
 Route::patch('/tickets/estado', [TicketsController::class, 'actualizarEstado']);
+Route::patch('/tickets/responsable', [TicketsController::class, 'actualizarResponsable']);
 
 // EndPoint Adjuntos
 Route::get('/adjuntos/{id}', [AdjuntosController::class, 'obtener']);

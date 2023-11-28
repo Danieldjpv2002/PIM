@@ -45,3 +45,33 @@ const onTicketEstadoClicked = async (estado, id) => {
         })
     }
 }
+
+const onTicketResponsableClicked = async (responsable, id) => {
+    try {
+        const { status, result } = await Fetch('./api/tickets/responsable', {
+            method: 'PATCH',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                id, responsable
+            })
+        })
+
+        if (!status) throw new Error(result?.message || 'Ocurrio un error al actualizar el responsable')
+
+        Notify.add({
+            title: result.message,
+            body: 'El responsable del ticket se actualizo correctamente'
+        })
+
+        dataGrid.refresh()
+    } catch (error) {
+        Notify.add({
+            title: 'Error',
+            body: error.message,
+            type: 'danger'
+        })
+    }
+}
