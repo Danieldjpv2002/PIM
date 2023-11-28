@@ -47,9 +47,6 @@ Route::get('/estados', function () {
 Route::get('/usuarios', function () {
     return view('usuarios')->with('ENV', ENV::class);
 });
-Route::get('/adjuntos', function () {
-    return view('adjuntos')->with('ENV', ENV::class);
-});
 
 Route::get('/offline', function () {
     return view('vendor.laravelpwa.offline');

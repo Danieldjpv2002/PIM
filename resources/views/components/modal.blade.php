@@ -8,11 +8,13 @@
       <div class="modal-body">
         {{ $slot }}
       </div>
-      <div class="modal-footer">
-        <button class="btn btn-sm btn-danger pull-left" type="button"
-          data-bs-dismiss="modal">{{ $btnCancelText ?? 'Cerrar' }}</button>
-        <button class="btn btn-sm btn-success pull-right" type="submit">{{ $btnSubmitText ?? 'Aceptar' }}</button>
-      </div>
+      @if (!isset($hideFooter) || !$hideFooter)
+        <div class="modal-footer">
+          <button class="btn btn-sm btn-danger pull-left" type="button"
+            data-bs-dismiss="modal">{{ $btnCancelText ?? 'Cerrar' }}</button>
+          <button class="btn btn-sm btn-success pull-right" type="submit">{{ $btnSubmitText ?? 'Aceptar' }}</button>
+        </div>
+      @endif
     </div>
   </div>
 </form>

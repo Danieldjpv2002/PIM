@@ -4,12 +4,12 @@ namespace App\Http\Middleware;
 
 use App\ENV;
 use App\Http\Controllers\Controller;
-use App\Models\Response;
-use App\Models\SoDe\Users;
+use App\Models\Usuarios;
 use Closure;
 use Exception;
 use Illuminate\Http\Request;
 use SoDe\Extend\JSON;
+use SoDe\Extend\Response;
 
 class AuthSode
 {
@@ -24,22 +24,12 @@ class AuthSode
     {
         $response = new Response();
         try {
-            $username = Controller::decode($request->header('SoDe-Auth-User'));
-            $auth_token = Controller::decode($request->header('SoDe-Auth-Token'));
+            $username = $request->header('SoDe-Auth-User');
+            $auth_token = $request->header('SoDe-Auth-Token');
 
-            $userJpa = Users::select([
-                'users.id AS id',
-                'users.username AS username',
-                'users.auth_token AS auth_token',
-                'sessions._business AS session__business',
-                'services.correlative AS session__service'
-            ])
-                ->leftJoin('sessions', 'users.id', 'sessions._user')
-                ->leftJoin('services', 'sessions._service', 'services.id')
-                ->where('users.username', '=', $username)
-                ->where('users.auth_token', '=', $auth_token)
-                ->where('services.correlative', '=', ENV::APP_CORRELATIVE)
-                ->orderBy('sessions.id', 'DESC')
+            $userJpa = Usuarios::select()
+                ->where('usuario', '=', $username)
+                ->where('token', '=', $auth_token)
                 ->first();
 
             if (!$userJpa) {

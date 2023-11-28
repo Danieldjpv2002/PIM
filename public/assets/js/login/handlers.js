@@ -1,0 +1,1 @@
+$(document).on('submit', 'form', e => onLoginSubmit(e))

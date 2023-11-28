@@ -18,6 +18,7 @@ const Fetch = async (url, params = {}) => {
             result: JSON.parseable(raw) || raw
         }
     } catch (error) {
+        console.error(error)
         return {
             status: false,
             result: null

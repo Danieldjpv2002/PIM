@@ -9,28 +9,13 @@
     <div class="user-box text-center">
 
       <img
-        session="src: //auth.{{ ENV::APP_DOMAIN }}/api/users/avatar/{relative_id}/mini; alt: Perfil de {person.name}; title: Perfil de {person.name}"
-        src="//auth.{{ ENV::APP_DOMAIN }}/api/users/avatar/undefined/mini" alt="Perfil de usuario"
+        session="alt: Perfil de {nombres}; title: Perfil de {nombres}"
+        src="//auth.sode.me/api/users/avatar/undefined/mini" alt="Perfil de usuario"
         title="Perfil de usuario" class="rounded-circle img-thumbnail avatar-md" style="background-color: transparent">
       <div class="dropdown">
-        <a session="person.name" href="#" class="user-name dropdown-toggle h5 mt-2 mb-1 d-block"
+        <a session="nombres" href="#" class="user-name dropdown-toggle h5 mt-2 mb-1 d-block"
           data-bs-toggle="dropdown" aria-expanded="false"></a>
         <div class="dropdown-menu user-pro-dropdown">
-
-          <a href="javascript:void(0);" class="dropdown-item notify-item">
-            <i class="fe-user me-1"></i>
-            <span>Mi perfil</span>
-          </a>
-
-          <a href="javascript:void(0);" class="dropdown-item notify-item">
-            <i class="fe-settings me-1"></i>
-            <span>Configuración</span>
-          </a>
-
-          <a id="btn-lockout" href="javascript:void(0);" class="dropdown-item notify-item">
-            <i class="fe-lock me-1"></i>
-            <span>Bloquear pantalla</span>
-          </a>
 
           <a id="btn-signout" href="javascript:void(0);" class="dropdown-item notify-item">
             <i class="fe-log-out me-1"></i>
@@ -40,7 +25,7 @@
         </div>
       </div>
 
-      <p session="username" class="text-muted left-user-info"></p>
+      <p session="usuario" class="text-muted left-user-info"></p>
 
       <ul class="list-inline">
         <li class="list-inline-item">
@@ -87,7 +72,7 @@
                   Mis Tickets
                 </a>
               </li>
-              <li>
+              <li data-resolve style="display: none">
                 <a href="./lista">
                   <i class="mdi mdi-book-clock-outline"></i>
                   Lista de tickets
@@ -97,14 +82,7 @@
           </div>
         </li>
 
-        <li>
-          <a href="./adjuntos">
-            <i class="mdi mdi-attachment"></i>
-            <span> Adjuntos </span>
-          </a>
-        </li>
-
-        <li>
+        <li data-resolve style="display: none">
           <a href="#configuraciones" data-bs-toggle="collapse">
             <i class="mdi mdi-application-cog"></i>
             <span> Configuraciones </span>
@@ -135,7 +113,7 @@
           </div>
         </li>
 
-        <li>
+        <li data-resolve style="display: none">
           <a href="./usuarios">
             <i class="mdi mdi-account-group-outline"></i>
             <span> Usuarios </span>

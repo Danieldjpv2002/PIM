@@ -47,6 +47,7 @@ class TicketsController extends Controller
     public function paginado(Request $request): HttpResponse|ResponseFactory
     {
         $response =  new dxResponse();
+        $session = $request->user;
         try {
             $ticketsInstance = ViewTickets::select();
 
@@ -58,6 +59,8 @@ class TicketsController extends Controller
                 ])
                     ->groupBy($selector);
             }
+
+            if ($request->mine) $ticketsInstance->where('informador__id', $session['id']);
 
             if ($request->filter) {
                 $ticketsInstance->where(function ($query) use ($request) {
@@ -110,17 +113,42 @@ class TicketsController extends Controller
     public function crear(Request $request): HttpResponse|ResponseFactory
     {
         $response = new Response();
+        $session = $request->user;
         try {
             $ticket = new Tickets();
             $ticket->_tipo = $request->_tipo;
             $ticket->asunto = $request->asunto;
             $ticket->descripcion = $request->descripcion;
+            $ticket->_informador = $session['id'];
 
             $ticket->save();
 
             $response->status = 200;
             $response->message = 'Operacion correcta';
             $response->data = $ticket->toArray();
+        } catch (\Throwable $th) {
+            $response->status = 400;
+            $response->message = $th->getMessage();
+        } finally {
+            return response(
+                $response->toArray(),
+                $response->status
+            );
+        }
+    }
+
+    static function solucion(Request $request)
+    {
+        $response = new Response();
+        try {
+            Tickets::where('id', $request->id)
+                ->update([
+                    '_estado' => 3,
+                    'solucion' => $request->solucion
+                ]);
+
+            $response->status = 200;
+            $response->message = 'Operacion correcta';
         } catch (\Throwable $th) {
             $response->status = 400;
             $response->message = $th->getMessage();

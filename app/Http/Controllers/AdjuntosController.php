@@ -44,7 +44,7 @@ class AdjuntosController extends Controller
         $response = new Response();
         try {
             $adjuntosJpa = ViewAdjuntos::select([
-                'id', 'nombre', 'mimetipo', 'ticket__id'
+                'id', 'nombre', 'mimetipo', 'tipo', 'ticket__id'
             ])
                 ->where('ticket__id', $ticket)
                 ->get();
@@ -143,6 +143,9 @@ class AdjuntosController extends Controller
             $adjunto->nombre = $blob->getClientOriginalName();
             $adjunto->mimetipo = $blob->getMimeType();
             $adjunto->binario = file_get_contents($blob->getRealPath());
+            if ($request->tipo == 'solucion') {
+                $adjunto->tipo = 'solucion';
+            }
             $adjunto->_ticket = $ticket;
 
             $adjunto->save();

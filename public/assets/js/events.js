@@ -67,6 +67,10 @@ const onNewTicketSubmit = async (e) => {
                 formData.append('blob', newBlob)
                 const { status, result } = await fetch('./api/adjuntos', {
                     method: 'POST',
+                    headers: {
+                        'SoDe-Auth-User': Cookies.get('SoDe-Auth-User'),
+                        'SoDe-Auth-Token': Cookies.get('SoDe-Auth-Token'),
+                    },
                     body: formData
                 })
                 if (!status) throw new Error(result?.message || 'Error inesperado al cargar el adjunto')
