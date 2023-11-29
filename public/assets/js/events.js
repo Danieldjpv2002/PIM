@@ -68,8 +68,8 @@ const onNewTicketSubmit = async (e) => {
                 const { status, result } = await fetch('./api/adjuntos', {
                     method: 'POST',
                     headers: {
-                        'SoDe-Auth-User': Cookies.get('SoDe-Auth-User'),
-                        'SoDe-Auth-Token': Cookies.get('SoDe-Auth-Token'),
+                        'Auth-User': Cookies.get('Auth-User'),
+                        'Auth-Token': Cookies.get('Auth-Token'),
                     },
                     body: formData
                 })
