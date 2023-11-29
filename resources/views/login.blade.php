@@ -91,8 +91,8 @@
   <script src="/lte/assets/js/vendor.min.js"></script>
   <script src="/lte/assets/js/app.min.js"></script>
 
-  <script src="/assets/js/login/events.js"></script>
-  <script src="/assets/js/login/handlers.js"></script>
+  <script src="/assets/js/login/events.js?v={{ uniqid() }}"></script>
+  <script src="/assets/js/login/handlers.js?v={{ uniqid() }}"></script>
 
 </body>
 
