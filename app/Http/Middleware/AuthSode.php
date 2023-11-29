@@ -24,8 +24,8 @@ class AuthSode
     {
         $response = new Response();
         try {
-            $username = $request->header('SoDe-Auth-User');
-            $auth_token = $request->header('SoDe-Auth-Token');
+            $username = $request->header('Auth-User');
+            $auth_token = $request->header('Auth-Token');
 
             $userJpa = Usuarios::select()
                 ->where('usuario', '=', $username)

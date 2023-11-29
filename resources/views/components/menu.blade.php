@@ -8,10 +8,9 @@
 
     <div class="user-box text-center">
 
-      <img
-        session="alt: Perfil de {nombres}; title: Perfil de {nombres}"
-        src="//auth.sode.me/api/users/avatar/undefined/mini" alt="Perfil de usuario"
-        title="Perfil de usuario" class="rounded-circle img-thumbnail avatar-md" style="background-color: transparent">
+      <img session="alt: Perfil de {nombres}; title: Perfil de {nombres}"
+        src="//auth.sode.me/api/users/avatar/undefined/mini" alt="Perfil de usuario" title="Perfil de usuario"
+        class="rounded-circle img-thumbnail avatar-md" style="background-color: transparent">
       <div class="dropdown">
         <a session="nombres" href="#" class="user-name dropdown-toggle h5 mt-2 mb-1 d-block"
           data-bs-toggle="dropdown" aria-expanded="false"></a>
@@ -35,7 +34,7 @@
         </li>
 
         <li class="list-inline-item">
-          <a href="#">
+          <a id="btn-signout" href="javascript:void(0);">
             <i class="mdi mdi-power"></i>
           </a>
         </li>
@@ -72,7 +71,7 @@
                   Mis Tickets
                 </a>
               </li>
-              <li data-resolve style="display: none">
+              <li rol-Agente rol-Administrador style="display: none">
                 <a href="./lista">
                   <i class="mdi mdi-book-clock-outline"></i>
                   Lista de tickets
@@ -82,7 +81,7 @@
           </div>
         </li>
 
-        <li data-resolve style="display: none">
+        <li rol-Administrador style="display: none">
           <a href="#configuraciones" data-bs-toggle="collapse">
             <i class="mdi mdi-application-cog"></i>
             <span> Configuraciones </span>
@@ -113,7 +112,7 @@
           </div>
         </li>
 
-        <li data-resolve style="display: none">
+        <li rol-Administrador style="display: none">
           <a href="./usuarios">
             <i class="mdi mdi-account-group-outline"></i>
             <span> Usuarios </span>

@@ -113,22 +113,36 @@ class UsuariosController extends Controller
     {
         $response = new Response();
         try {
-            $tipo = null;
+            $usuario = null;
             if ($request->id) {
-                $tipo = Usuarios::find($request->id);
+                $usuario = Usuarios::find($request->id);
             }
-            if (!$tipo) {
-                $tipo = new Usuarios();
+            if (!$usuario) {
+                $usuario = new Usuarios();
             }
-            $tipo->_categoria = $request->_categoria;
-            $tipo->tipo = $request->tipo;
-            $tipo->descripcion = $request->descripcion;
+            $usuario->usuario = $request->usuario;
+            if ($request->clave) {
+                if (strlen($request->clave) >= 8) {
+                    $usuario->clave = password_hash($request->clave, PASSWORD_DEFAULT);
+                    $usuario->token = null;
+                } else {
+                    throw new Exception('La contrasena debe tener al menos 8 caracteres');
+                }
+            }
+            $usuario->nombres = $request->nombres;
+            $usuario->apellidos = $request->apellidos;
+            $usuario->correo = $request->correo;
+            $usuario->telefono = $request->telefono;
+            $usuario->ip = $request->ip;
+            $usuario->anydesk = $request->anydesk;
+            $usuario->rol = $request->rol;
+            $usuario->importancia = $request->importancia;
 
-            $tipo->save();
+            $usuario->save();
 
             $response->status = 200;
             $response->message = 'Operacion correcta';
-            $response->data = $tipo->toArray();
+            $response->data = $usuario->toArray();
         } catch (\Throwable $th) {
             $response->status = 400;
             $response->message = $th->getMessage();
@@ -146,7 +160,8 @@ class UsuariosController extends Controller
         try {
             Usuarios::where('id', $id)
                 ->update([
-                    'estado' => $request->status ? 0 : 1
+                    'estado' => $request->status ? 0 : 1,
+                    'token' => null
                 ]);
 
             $response->status = 200;
@@ -167,7 +182,10 @@ class UsuariosController extends Controller
         $response = new Response();
         try {
             $deleted = Usuarios::where('id', $id)
-                ->update(['estado' => null]);
+                ->update([
+                    'estado' => null,
+                    'token' => null
+                ]);
 
             if (!$deleted) throw new Exception('No se ha eliminado ningun registro');
 

@@ -65,8 +65,8 @@ class AuthController
     {
         $response = new Response();
         try {
-            $username = $request->header('SoDe-Auth-User');
-            $auth_token = $request->header('SoDe-Auth-Token');
+            $username = $request->header('Auth-User');
+            $auth_token = $request->header('Auth-Token');
 
             if (!$username || !$auth_token) {
                 throw new Exception('Faltan alguno parámetros para la autenticación');

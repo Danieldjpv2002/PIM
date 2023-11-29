@@ -20,8 +20,8 @@ const onLoginSubmit = async (e) => {
 
         console.log(result.data.usuario, result.data.token)
 
-        Cookies.set('SoDe-Auth-User', result.data.usuario, 7)
-        Cookies.set('SoDe-Auth-Token', result.data.token, 7)
+        Cookies.set('Auth-User', result.data.usuario, 7)
+        Cookies.set('Auth-Token', result.data.token, 7)
 
         location.href = '/'
 

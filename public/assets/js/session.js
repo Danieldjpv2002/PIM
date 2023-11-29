@@ -1,9 +1,7 @@
 const drawSession = (data) => {
     const flatten = JSON.flatten(data)
 
-    if (data.resuelve) {
-        $('[data-resolve]').show(125)
-    }
+    $(`[rol-${data.rol}]`).fadeIn(125)
 
     const tags = document.querySelectorAll('[session]')
     tags.forEach(e => {
@@ -26,8 +24,8 @@ const drawSession = (data) => {
 }
 
 (async () => {
-    let username = Cookies.get('SoDe-Auth-User')
-    let token = Cookies.get('SoDe-Auth-Token')
+    let username = Cookies.get('Auth-User')
+    let token = Cookies.get('Auth-Token')
 
     try {
         if (!token || !username) throw new Error('No tienes sesión')
@@ -46,7 +44,7 @@ const drawSession = (data) => {
 
     } catch (error) {
         console.warn(error)
-        Cookies.delete('SoDe-Auth-Token')
+        Cookies.delete('Auth-Token')
         if (SERVICE)
             location.href = `/login`
     }
@@ -54,14 +52,14 @@ const drawSession = (data) => {
 
 document.querySelectorAll('#btn-signout').forEach(e => {
     e.onclick = () => {
-        Cookies.delete('SoDe-Auth-User')
-        Cookies.delete('SoDe-Auth-Token')
+        Cookies.delete('Auth-User')
+        Cookies.delete('Auth-Token')
         location.href = `/login`
     }
 })
 document.querySelectorAll('#btn-lockout').forEach(e => {
     e.onclick = () => {
-        Cookies.delete('SoDe-Auth-Token')
+        Cookies.delete('Auth-Token')
         location.href = `/login`
     }
 })
